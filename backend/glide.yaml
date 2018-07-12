@@ -1,0 +1,4 @@
+package: report/go-report/backend
+import:
+- package: github.com/gin-gonic/gin
+  version: ^1.2.0
