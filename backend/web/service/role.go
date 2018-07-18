@@ -1,6 +1,8 @@
 package service
 
-import . "report/goreport/backend/db"
+import (
+	. "report/goreport/backend/db"
+)
 
 type Role struct {
 	RoleId   string `json:"roleId"`
@@ -34,6 +36,12 @@ func GetAllRoles() []Role {
 	return roles
 }
 
+func GetRole(roleId string) Role {
+	var role Role
+	DB.Where("role_id=?", roleId).Find(&role)
+	return role
+}
+
 func UpdateRole(role Role) {
 	var oldRole Role
 	DB.Where("role_id=?", role.RoleId).Find(&oldRole).Update(&role)
@@ -58,4 +66,14 @@ func GetUserRoleResList(userId string, resType string) []RoleRes {
 		Where("dashboard_role_res.res_type=?", resType).
 		Find(&roleResList)
 	return roleResList
+}
+
+func SaveRoleRes(roleResList []RoleRes) {
+	for _, roleRes := range roleResList {
+		DB.Table("report_role_res").Create(&roleRes)
+	}
+}
+
+func DeleteRoleRes(roleId string) {
+	DB.Where("role_id=?", roleId).Delete(RoleRes{})
 }

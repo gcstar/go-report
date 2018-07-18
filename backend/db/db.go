@@ -19,4 +19,5 @@ func init() {
 	db.DB().SetMaxOpenConns(50)
 	db.LogMode(true)
 	DB = db
+
 }

@@ -1,6 +1,7 @@
 package router
 
 import (
+	"fmt"
 	"net/http"
 	. "report/goreport/backend/web/service"
 
@@ -16,6 +17,8 @@ func AddRoleController(router *gin.Engine) {
 	router.GET("/deleteRole", deleteRole)
 	router.GET("/getRoleResList", getRoleResList)
 	router.GET("/getUserRoleResList", getUserRoleResList)
+	router.POST("/saveRoleRes", saveRoleRes)
+	router.GET("/deleteRoleRes", deleteRoleRes)
 }
 
 func saveRole(c *gin.Context) {
@@ -68,9 +71,31 @@ func getUserRoleResList(c *gin.Context) {
 	roleResList := GetUserRoleResList(userId, resType)
 	if len(roleResList) == 0 {
 		c.JSON(http.StatusOK, gin.H{"msg": "no data"})
-
 	} else {
 		c.JSON(http.StatusOK, gin.H{"msg": "get roleRes success", "data": roleResList})
 
 	}
+}
+
+// type RoleResList struct {
+// 	List []RoleRes `json:"list"`
+// }
+
+func saveRoleRes(c *gin.Context) {
+	var roleResList []RoleRes
+	if err := c.BindJSON(&roleResList); err == nil {
+		SaveRoleRes(roleResList)
+		c.JSON(http.StatusOK, gin.H{"status": "update role success"})
+	} else {
+		fmt.Println(roleResList)
+		c.JSON(http.StatusInternalServerError, gin.H{"status": err})
+
+	}
+}
+
+func deleteRoleRes(c *gin.Context) {
+	roleId := c.DefaultQuery("roleId", "-1")
+	DeleteRoleRes(roleId)
+	c.JSON(http.StatusOK, gin.H{"msg": "delete roleRes success"})
+
 }

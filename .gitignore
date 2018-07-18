@@ -12,3 +12,5 @@
 *.out
 backend/vendor
 backend/*.lock
+backend/log/*
+
