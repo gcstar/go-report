@@ -13,4 +13,4 @@
 backend/vendor
 backend/*.lock
 backend/log/*
-
+frontend/vue-element-admin/node_modules/*
