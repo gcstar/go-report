@@ -12,5 +12,5 @@
 *.out
 backend/vendor
 backend/*.lock
-backend/log/*
+backend/log
 frontend/vue-element-admin/node_modules/*

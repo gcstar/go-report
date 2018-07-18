@@ -77,10 +77,6 @@ func getUserRoleResList(c *gin.Context) {
 	}
 }
 
-// type RoleResList struct {
-// 	List []RoleRes `json:"list"`
-// }
-
 func saveRoleRes(c *gin.Context) {
 	var roleResList []RoleRes
 	if err := c.BindJSON(&roleResList); err == nil {

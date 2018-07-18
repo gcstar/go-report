@@ -1,2 +1,5 @@
-[GIN] 2018/07/18 - 14:24:54 | 200 [0m|      596.59µs |             ::1 |  GET [0m    /index
-[GIN] 2018/07/18 - 14:25:55 | 200 [0m|     282.354µs |             ::1 |  GET [0m    /index
+[GIN] 2018/07/18 - 17:42:24 | 200 [0m|  183.307041ms |             ::1 |  GET [0m    /metadata/report/list
+[GIN] 2018/07/18 - 17:43:55 | 200 [0m|  187.914696ms |             ::1 |  GET [0m    /metadata/report/list
+[GIN] 2018/07/18 - 17:44:39 | 200 [0m|  182.861322ms |             ::1 |  GET [0m    /metadata/report/list
+[GIN] 2018/07/18 - 17:44:51 | 200 [0m|  183.924909ms |             ::1 |  GET [0m    /metadata/report/list
+[GIN] 2018/07/18 - 17:45:04 | 200 [0m|  184.636899ms |             ::1 |  GET [0m    /metadata/report/list

@@ -10,7 +10,7 @@ import (
 var DB *gorm.DB
 
 func init() {
-	db, err := gorm.Open("mysql", "growthdb:devhz123456@(172.17.60.131:3306)/bi?charset=utf8&parseTime=True")
+	db, err := gorm.Open("mysql", "root:123456@(localhost:3306)/bi?charset=utf8&parseTime=True")
 	if err != nil {
 		panic("init database error")
 	}

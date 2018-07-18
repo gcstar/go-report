@@ -16,5 +16,6 @@ func main() {
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	r := gin.Default()
 	AddRoleController(r)
+	AddMetadataController(r)
 	r.Run(":7777")
 }
