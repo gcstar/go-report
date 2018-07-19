@@ -19,17 +19,27 @@ type Report struct {
 	CreateUser   string    `json:"createUser"`
 	GmtCreated   time.Time `json:"gmtCreated"`
 	GmtModified  time.Time `json:"gmtModified"`
-	CategoryName string    `json:"categoryName"`
-	DsName       string    `json:"dsName"`
+	CategoryName string    `gorm:"-" json:"categoryName"`
+	DsName       string    `gorm:"-" json:"dsName"`
 }
 
 func (report Report) TableName() string {
 	return "goreport_report"
 }
 
-func ListReportByCategoryId(categoryId int, page int, row int) *[]Report {
+func ListReportByCategoryId(categoryId int) *[]Report {
 	var reports []Report
-	offset := row * (page - 1)
-	DB.Where("category_id=?", categoryId).Offset(offset).Limit(row).Find(&reports)
+	DB.Where("category_id=?", categoryId).Find(&reports)
 	return &reports
+}
+
+func FindReport(fieldName string, keyWord string) *[]Report {
+	var reports []Report
+	DB.Where(fieldName+" like ?", "%"+keyWord+"%").Find(&reports)
+	return &reports
+}
+
+func EditReport(report Report) int64 {
+	db := DB.Save(&report)
+	return db.RowsAffected
 }

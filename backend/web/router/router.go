@@ -3,6 +3,7 @@ package router
 import (
 	"fmt"
 	"net/http"
+	. "report/goreport/backend/web/model"
 	. "report/goreport/backend/web/service"
 
 	"github.com/gin-gonic/gin"
@@ -60,7 +61,7 @@ func getRoleResList(c *gin.Context) {
 	if len(roleRes) == 0 {
 		c.JSON(http.StatusOK, gin.H{"msg": "no data"})
 	} else {
-		c.JSON(http.StatusOK, gin.H{"msg": "get roleRes success", "data": roleRes})
+		c.JSON(http.StatusOK, OK("success", roleRes))
 
 	}
 }

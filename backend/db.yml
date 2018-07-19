@@ -1,0 +1,7 @@
+db:
+  name: test
+  type: mysql
+  user: test
+  password: 123456
+  url: localhost
+  port: 3306
