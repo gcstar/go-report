@@ -24,29 +24,38 @@ func (category Category) TableName() string {
 	return "goreport_category"
 }
 
-func GetCategoryList() []Category {
-	var categoryList []Category
-	DB.Find(&categoryList)
-	return categoryList
+func GetAllCategory() *[]Category {
+	var categories []Category
+	DB.Find(&categories)
+	return &categories
 }
 
-func UpdateCategory(category Category) {
+func EditCategory(category Category) int64 {
 	category.GmtModified = time.Now()
-	DB.Save(&category)
+	db := DB.Save(&category)
+	return db.RowsAffected
 }
 
-func AddCategory(category Category) {
+func AddCategory(category Category) int64 {
 	category.GmtCreated = time.Now()
 	category.GmtModified = time.Now()
-	DB.Create(&category)
+	db := DB.Create(&category)
+	return db.RowsAffected
 }
 
-func DeleteCategory(category Category) {
-	DB.Delete(&category)
+func DeleteCategory(category Category) int64 {
+	db := DB.Delete(&category)
+	return db.RowsAffected
 }
 
 func GetCategory(id int) *Category {
 	var category Category
 	DB.Where("id=?", id).Find(&category)
 	return &category
+}
+
+func SaveCategoryName(categoryId int, name string) int64 {
+	category := Category{ID: categoryId, Name: name}
+	db := DB.Model(&category).Select("name").Update(&category)
+	return db.RowsAffected
 }

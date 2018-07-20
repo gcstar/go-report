@@ -11,9 +11,9 @@ import (
 
 var DbConfig = struct {
 	DB struct {
-		Name     string
-		Type     string `default:"mysql"`
-		User     string `default:"root"`
+		Name     string `required:"true"`
+		Type     string `required:"true" default:"mysql"`
+		User     string `required:"true" default:"root"`
 		Password string `required:"true" env:"DBPassword"`
 		Url      string `required:"true"`
 		Port     uint   `default:"3306"`
