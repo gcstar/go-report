@@ -2,7 +2,6 @@ package service
 
 import (
 	"encoding/json"
-	"fmt"
 	. "report/goreport/backend/db"
 
 	"time"
@@ -25,6 +24,7 @@ type Datasource struct {
 	GmtModified  time.Time `json:"gmtModified"`
 }
 
+//数据连接池配置选项
 type ConnectionPoolOptions struct {
 	InitialSize                   int   `json:"initialSize"`
 	MaxActive                     int   `json:"maxActive"`
@@ -77,7 +77,6 @@ func EditDatasource(datasource Datasource) int64 {
 
 func DeleteDatasource(id int) int64 {
 	var datasource Datasource
-
 	db := DB.Where("id=?", id).Find(&datasource).Delete(&datasource)
 	return db.RowsAffected
 }
@@ -86,8 +85,6 @@ func GetReportDatasource(dsId int) *ReportDatasource {
 	var datasource Datasource
 	DB.Where("id=?", dsId).Find(&datasource)
 	var options ConnectionPoolOptions
-	fmt.Println(datasource.Options)
-
 	json.Unmarshal([]byte(datasource.Options), &options)
 	reportDatasource := ReportDatasource{
 		Uid:          datasource.Uid,
@@ -107,6 +104,5 @@ func TestConnection(datasource Datasource) bool {
 	// url := datasource.JdbcUrl
 	// user := datasource.User
 	// password := datasource.Password
-
 	return true
 }

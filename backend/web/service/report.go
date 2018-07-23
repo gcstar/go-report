@@ -1,7 +1,9 @@
 package service
 
 import (
+	"encoding/json"
 	"fmt"
+
 	. "report/goreport/backend/db"
 	"time"
 )
@@ -73,6 +75,39 @@ type ReportMetaDataColumn struct {
 	UsHidden        *bool  `json:"isHidden"`
 }
 
+type ReportQueryParameter struct {
+	Name           string `json:"name"`
+	Text           string `json:"text"`
+	FormElement    string `json:"formElement"`
+	Content        string `json:"content"`
+	DefaultValue   string `json:"defaultValue"`
+	DefaultText    string `json:"defaultText"`
+	DataSource     string `json:"dataSource"`
+	DataType       string `json:"dataType"`
+	Comment        string `json:"comment"`
+	Width          int    `json:"width"`
+	Height         int    `json:"height"`
+	IsRequired     *bool  `json:"isRequired"`
+	IsAutoComplete *bool  `json:"isAutoComplete"`
+}
+
+type ReportParameter struct {
+	ID                 string `json:"id"`
+	Name               string
+	Layout             int
+	StatColumnLayout   int    `json:"statColumnLayout"`
+	SqlText            string `json:"sqlText"`
+	metaColumns        *[]ReportMetaDataColumn
+	EnabledStatColumns *[]string
+	IsRowSpan          *bool
+}
+
+type ReportQueryParamItem struct {
+	Name     string
+	Text     string
+	Selected *bool
+}
+
 func (report Report) TableName() string {
 	return "goreport_report"
 }
@@ -122,6 +157,24 @@ func GetReportSqlText(reportId int) string {
 	var report Report
 	DB.Where("id=?", reportId).Select("SqlText").Find(&report)
 	return report.SqlText
+}
+
+func parseOptions(jsonStr string) *ReportOptions {
+	var reportOption ReportOptions
+	json.Unmarshal([]byte(jsonStr), &reportOption)
+	return &reportOption
+}
+
+func parseQueryParams(jsonStr string) *ReportQueryParameter {
+	var queryParameter ReportQueryParameter
+	json.Unmarshal([]byte(jsonStr), &queryParameter)
+	return &queryParameter
+}
+
+func parseMetaColumns(jsonStr string) *ReportMetaDataColumn {
+	var metaDataColumn ReportMetaDataColumn
+	json.Unmarshal([]byte(jsonStr), &metaDataColumn)
+	return &metaDataColumn
 }
 
 func GetMetaDataColumns(dsId int, sqlText string) {

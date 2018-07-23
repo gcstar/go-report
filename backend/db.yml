@@ -1,7 +1,7 @@
 db:
-  name: test
+  name: bi
   type: mysql
-  user: test
-  password: 123456
-  url: localhost
+  user: growthdb
+  password: devhz123456
+  url: 172.17.60.131
   port: 3306

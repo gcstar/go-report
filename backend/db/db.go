@@ -22,6 +22,23 @@ var DbConfig = struct {
 
 var DB *gorm.DB
 
+var DataSource = make(map[string]*gorm.DB, 10)
+
+func GetDataSource(user string, password string, url string) *gorm.DB {
+	key := user + "|" + password + "|" + url
+	datasource := DataSource[key]
+	if datasource == nil {
+		connectUrl := fmt.Sprintf("%s:%s@(%s:3306)?charset=utf8&parseTime=True",
+			user, password, url)
+		datasource, err := gorm.Open("mysql", connectUrl)
+		if err != nil {
+			panic(err)
+		}
+		DataSource[key] = datasource
+	}
+	return datasource
+}
+
 func init() {
 	configor.Load(&DbConfig, "db.yml")
 	connectUrl := fmt.Sprintf("%s:%s@(%s:%d)/%s?charset=utf8&parseTime=True",
