@@ -53,7 +53,7 @@ type ReportDatasource struct {
 }
 
 func (datasource Datasource) TableName() string {
-	return "goreport_datasource"
+	return "ezrpt_meta_datasource"
 }
 
 func AddDatasource(datasource Datasource) int64 {

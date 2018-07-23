@@ -21,7 +21,7 @@ type Conf struct {
 }
 
 func (conf Conf) TableName() string {
-	return "goreport_conf"
+	return "ezrpt_meta_conf"
 }
 func FindConf(fieldName string, keyWord string) *[]Conf {
 	var confList []Conf

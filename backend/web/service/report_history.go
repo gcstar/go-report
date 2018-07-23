@@ -23,7 +23,7 @@ type ReportHistory struct {
 }
 
 func (history ReportHistory) TableName() string {
-	return "goreport_history"
+	return "ezrpt_meta_report_history"
 }
 
 func ListReportHistory(reportId int) *[]ReportHistory {

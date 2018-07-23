@@ -14,7 +14,6 @@ func main() {
 	f, _ := os.Create("log/gin.log")
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 	r := gin.Default()
-	router.AddRoleController(r)
 	router.AddMetadataController(r)
 	r.Run(":7777")
 }

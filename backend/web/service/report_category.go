@@ -21,7 +21,7 @@ type Category struct {
 }
 
 func (category Category) TableName() string {
-	return "goreport_category"
+	return "ezrpt_meta_category"
 }
 
 func GetAllCategory() *[]Category {

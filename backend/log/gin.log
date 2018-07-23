@@ -1,0 +1,2 @@
+[GIN] 2018/07/23 - 16:34:28 | 200 [0m|    3.081666ms |             ::1 |  GET [0m    /metadata/report/list
+[GIN] 2018/07/23 - 16:35:04 | 200 [0m|    2.943733ms |             ::1 |  GET [0m    /metadata/categorys

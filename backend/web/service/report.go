@@ -109,7 +109,7 @@ type ReportQueryParamItem struct {
 }
 
 func (report Report) TableName() string {
-	return "goreport_report"
+	return "ezrpt_meta_report"
 }
 
 func ListReportByCategoryId(categoryId int) *[]Report {
