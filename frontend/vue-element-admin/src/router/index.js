@@ -61,6 +61,17 @@ export const constantRouterMap = [
       name: 'guide',
       meta: { title: 'guide', icon: 'guide', noCache: true }
     }]
+  },
+  {
+    path: '/report',
+    component: Layout,
+    redirect: '/report/index',
+    children: [{
+      path: 'index',
+      component: () => import('@/views/report/index'),
+      name: 'report',
+      meta: { title: 'report', icon: 'table', noCache: true }
+    }]
   }
 ]
 
@@ -69,6 +80,8 @@ export default new Router({
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRouterMap
 })
+
+export const asyncRouterMap1 = []
 
 export const asyncRouterMap = [
   {

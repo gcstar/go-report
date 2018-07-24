@@ -1,10 +1,10 @@
 package router
 
 import (
+	"fmt"
 	"net/http"
 	. "report/goreport/backend/web/model"
 	. "report/goreport/backend/web/service"
-
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -17,17 +17,27 @@ func AddMetadataController(router *gin.Engine) {
 		metadata.POST("/category", editCategory)
 		metadata.DELETE("/category", deleteCategory)
 		metadata.GET("/category/:id", getCategory)
-		metadata.GET("/categorys", getCategoryList)
+		metadata.GET("/categories", getCategoryList)
 		metadata.POST("/category/changename", saveCategoryName)
 		metadata.GET("/report/list", listReportByCategoryId)
 		metadata.GET("/report/findReport", findReport)
 		metadata.POST("/report/editReport", editReport)
+		metadata.GET("/report/listAll", listAllReports)
 		metadata.GET("/datasource", getReportDatasource)
 	}
 }
 
+func listAllReports(c *gin.Context) {
+	reports := ListAllReports()
+	if reports == nil {
+		c.JSON(200, NoData())
+	} else {
+		c.JSON(200, OK("get reports success", reports))
+	}
+}
 func listReportByCategoryId(c *gin.Context) {
 	categoryId, _ := strconv.Atoi(c.DefaultQuery("categoryId", "-1"))
+	fmt.Println(categoryId)
 	reports := ListReportByCategoryId(categoryId)
 	if reports == nil {
 		c.JSON(200, NoData())

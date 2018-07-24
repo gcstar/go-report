@@ -63,7 +63,7 @@ type ReportMetaDataColumn struct {
 	Expression      string `json:"expression"`
 	Format          string `json:"format"`
 	Comment         string `json:"comment"`
-	Width           int    `json:"width"`
+	Width           int64  `json:"width"`
 	Decimals        int    `json:"decimals"`
 	Type            int    `json:"type"`
 	SortType        int    `json:"sortType"`
@@ -72,7 +72,7 @@ type ReportMetaDataColumn struct {
 	IsPercent       *bool  `json:"isPercent"`
 	IsOptional      *bool  `json:"isOptional"`
 	IsDisplayInMail *bool  `json:"isDisplayInMail"`
-	UsHidden        *bool  `json:"isHidden"`
+	IsHidden        *bool  `json:"isHidden"`
 }
 
 type ReportQueryParameter struct {
@@ -139,6 +139,12 @@ func DeleteReport(id int) int64 {
 	var report Report
 	db := DB.Where("id=?", id).Find(&report).Delete(&report)
 	return db.RowsAffected
+}
+
+func ListAllReports() *[]Report {
+	var reports []Report
+	DB.Find(&reports)
+	return &reports
 }
 
 func SaveQueryParams(reportId int, queryParams string) int64 {

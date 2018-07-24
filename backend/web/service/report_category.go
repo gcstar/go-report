@@ -3,6 +3,7 @@ package service
 import (
 	. "report/goreport/backend/db"
 
+	"fmt"
 	"time"
 )
 
@@ -19,14 +20,37 @@ type Category struct {
 	GmtCreated  time.Time `json:"gmtCreated"`
 	GmtModified time.Time `json:"gmtModified"`
 }
+type Department struct {
+	Name  interface{}
+	Value interface{}
+}
 
 func (category Category) TableName() string {
 	return "ezrpt_meta_category"
 }
 
-func GetAllCategory() *[]Category {
+func GetAllCategory() interface{} {
+	sql := "select id as Name,name as Value from ezrpt_department limit 1"
 	var categories []Category
 	DB.Find(&categories)
+	rows, err := DB.Raw(sql).Rows()
+	if err != nil {
+		panic(err)
+	}
+	columns, err := rows.Columns()
+	if err == nil {
+		for _, column := range columns {
+			fmt.Println(column)
+		}
+	}
+
+	columnTypes, err := rows.ColumnTypes()
+	if err == nil {
+		for _, column := range columnTypes {
+			fmt.Println(column.DatabaseTypeName())
+		}
+	}
+
 	return &categories
 }
 
