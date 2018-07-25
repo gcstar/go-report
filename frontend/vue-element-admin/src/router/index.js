@@ -29,6 +29,7 @@ export const constantRouterMap = [
   { path: '/authredirect', component: () => import('@/views/login/authredirect'), hidden: true },
   { path: '/404', component: () => import('@/views/errorPage/404'), hidden: true },
   { path: '/401', component: () => import('@/views/errorPage/401'), hidden: true },
+
   {
     path: '',
     component: Layout,
@@ -71,6 +72,12 @@ export const constantRouterMap = [
       component: () => import('@/views/report/index'),
       name: 'report',
       meta: { title: 'report', icon: 'table', noCache: true }
+    }, {
+      path: 'preview/:id',
+      hidden: true,
+      component: () => import('@/views/report/preview'),
+      name: 'preview',
+      meta: { title: 'preview', icon: 'table', noCache: true }
     }]
   }
 ]
@@ -88,7 +95,7 @@ export const asyncRouterMap = [
     path: '/permission',
     component: Layout,
     redirect: '/permission/index',
-    alwaysShow: true, // will always show the root menu
+    alwaysShow: true, // will always show the root menu,
     meta: {
       title: 'permission',
       icon: 'lock',
