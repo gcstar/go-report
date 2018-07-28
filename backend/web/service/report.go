@@ -75,6 +75,7 @@ type ReportMetaDataColumn struct {
 	IsHidden        *bool  `json:"isHidden"`
 }
 
+//报表参数选项
 type ReportQueryParameter struct {
 	Name           string `json:"name"`
 	Text           string `json:"text"`
@@ -97,7 +98,7 @@ type ReportParameter struct {
 	Layout             int
 	StatColumnLayout   int    `json:"statColumnLayout"`
 	SqlText            string `json:"sqlText"`
-	metaColumns        *[]ReportMetaDataColumn
+	MetaColumns        *[]ReportMetaDataColumn
 	EnabledStatColumns *[]string
 	IsRowSpan          *bool
 }
@@ -106,6 +107,13 @@ type ReportQueryParamItem struct {
 	Name     string
 	Text     string
 	Selected *bool
+}
+
+type ReportTable struct {
+	HtmlText            string `json:"htmlText"`
+	SqlText             string `json:"sqlText"`
+	MetaDataRowCount    int    `json:"metaDataRowCount"`
+	MetaDataColumnCount int    `json:"metaDataColumnCount"`
 }
 
 func (report Report) TableName() string {
@@ -153,10 +161,10 @@ func SaveQueryParams(reportId int, queryParams string) int64 {
 	return db.RowsAffected
 }
 
-func GetReportByUid(uid int) *[]Report {
-	var reports []Report
-	DB.Where("uid=?", uid).Find(&reports)
-	return &reports
+func GetReportByUid(uid string) *Report {
+	var report Report
+	DB.Where("uid=?", uid).Find(&report)
+	return &report
 }
 
 func GetReportSqlText(reportId int) string {
@@ -165,16 +173,29 @@ func GetReportSqlText(reportId int) string {
 	return report.SqlText
 }
 
+func GetReportQueryColumn(uid string) {
+
+}
+
+func GetReportData(uid string) {
+	report := GetReportByUid(uid)
+	queryParmas := parseQueryParams(report.QueryParams)
+	if len(queryParmas) == 0 {
+
+	}
+
+}
+
 func parseOptions(jsonStr string) *ReportOptions {
 	var reportOption ReportOptions
 	json.Unmarshal([]byte(jsonStr), &reportOption)
 	return &reportOption
 }
 
-func parseQueryParams(jsonStr string) *ReportQueryParameter {
-	var queryParameter ReportQueryParameter
+func parseQueryParams(jsonStr string) []ReportQueryParameter {
+	var queryParameter []ReportQueryParameter
 	json.Unmarshal([]byte(jsonStr), &queryParameter)
-	return &queryParameter
+	return queryParameter
 }
 
 func parseMetaColumns(jsonStr string) *ReportMetaDataColumn {

@@ -23,7 +23,19 @@ func AddMetadataController(router *gin.Engine) {
 		metadata.GET("/report/findReport", findReport)
 		metadata.POST("/report/editReport", editReport)
 		metadata.GET("/report/listAll", listAllReports)
+		metadata.GET("/report/getQueryColumn", getQueryColumn)
 		metadata.GET("/datasource", getReportDatasource)
+	}
+}
+
+func getQueryColumn(c *gin.Context) {
+	uid := c.DefaultQuery("uid", "-1")
+	params := GetQueryColumn(uid)
+	if len(params) == 0 {
+		c.JSON(200, NoData())
+	} else {
+		c.JSON(200, OK("get query params success", params))
+
 	}
 }
 
@@ -171,7 +183,5 @@ func deleteReport(c *gin.Context) {
 func getReportDatasource(c *gin.Context) {
 	dsId, _ := strconv.Atoi(c.DefaultQuery("id", "-1"))
 	reportDatasource := GetReportDatasource(dsId)
-	// if reportDatasource != nil {
 	c.JSON(200, OK("get report datasource success", reportDatasource))
-	// }
 }

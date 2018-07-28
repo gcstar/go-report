@@ -78,6 +78,12 @@ export const constantRouterMap = [
       component: () => import('@/views/report/preview'),
       name: 'preview',
       meta: { title: 'preview', icon: 'table', noCache: true }
+    }, {
+      path: 'edit/:id',
+      hidden: true,
+      component: () => import('@/views/report/edit'),
+      name: 'reportedit',
+      meta: { title: 'reportedit', icon: 'table', noCache: true }
     }]
   }
 ]

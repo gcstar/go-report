@@ -28,3 +28,10 @@ export function findReports(param) {
     method: 'get'
   })
 }
+
+export function getQueryColumn(uid) {
+  return request({
+    url: '/metadata/report/getQueryColumn?uid=' + uid,
+    method: 'get'
+  })
+}

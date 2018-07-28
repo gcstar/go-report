@@ -62,7 +62,8 @@ export default {
     theme: '换肤',
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
-    preview: '报表预览'
+    preview: '报表预览',
+    reportedit: '报表编辑'
   },
   navbar: {
     logOut: '退出登录',

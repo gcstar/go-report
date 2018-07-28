@@ -25,9 +25,9 @@
       <el-table-column label="操作" width="300">
         <template slot-scope="scope">
           <el-button-group>
-            <el-button size="mini" type="primary" icon="el-icon-edit" @click="alert(scope.row.id)">编辑</el-button>
+            <el-button size="mini" type="primary" icon="el-icon-edit" @click="editReport(scope.row.uid)">编辑</el-button>
             <el-button size="mini" type="danger" icon="el-icon-delete" @click="removeReport(scope.row.id)">删除</el-button>
-            <el-button size="mini" type="warning" icon="el-icon-view" @click="previewReport(scope.row.id)">查看</el-button>
+            <el-button size="mini" type="warning" icon="el-icon-view" @click="previewReport(scope.row.uid)">查看</el-button>
           </el-button-group>
         </template>
       </el-table-column>
@@ -63,6 +63,7 @@ export default {
       categoryList: [],
       reportColumns: [
         { prop: 'id', text: '报表id', visiable: true },
+        { prop: 'uid', text: '报表id', visiable: false },
         { prop: 'categoryId', text: 'categoryId', visiable: false },
         { prop: 'categoryName', text: 'categoryName', visiable: false },
         { prop: 'name', text: '报表名称', visiable: true },
@@ -98,9 +99,14 @@ export default {
         this.reportList = res.data.data
       })
     },
-    alert(id) {},
     previewReport(id) {
       this.$router.push({ name: 'preview', params: { id: id }})
+    },
+    editReport(id) {
+      this.$router.push({
+        name: 'reportedit',
+        params: { id: id }
+      })
     },
     removeReport(id) {},
     fetchReportList() {
