@@ -1,20 +1,29 @@
 <template>
   <el-card>
     <el-row>
-      <el-col v-for="item in queryColumn" :span="6">
-        <el-date-picker v-if="item.formElement=='date'" v-model="item.name" :placeholder="item.text"></el-date-picker>
-        <el-input v-if="item.formElement == 'string'" v-model="item.name" :placeholder="item.text"></el-input>
+      <el-col v-for="item in queryColumn" :key="item.name" :span="6">
+        <el-date-picker v-if="item.formElement=='date'" value-format="yyyy-MM-dd" v-model="item.defaultValue" :placeholder="item.text"></el-date-picker>
+        <el-input v-if="item.formElement == 'string'" v-model="item.defaultValue" :placeholder="item.text"></el-input>
       </el-col>
       <el-col :span="4">
-        <el-button type="primary">查 询</el-button>
+        <el-button type="primary" @click="searchReportData">查 询</el-button>
       </el-col>
     </el-row>
+    <el-row>
+      <el-table :data="tableData">
+        <el-table-column v-for="item in tableColumn" :key="item.name" :prop="item.name" :label="item.text"></el-table-column>
+      </el-table>
+    </el-row>
   </el-card>
+
+  <!-- <el-card> -->
+
+  <!-- </el-card> -->
 
 </template>
 
 <script>
-import { findReports, getQueryColumn } from '@/api/report'
+import { findReports, getQueryColumn, getReportTableData } from '@/api/report'
 
 export default {
   name: 'reportPreview',
@@ -23,7 +32,9 @@ export default {
       uid: -1,
       report: {},
       queryColumn: [],
-      queryForm: {}
+      queryForm: {},
+      tableColumn: [],
+      tableData: []
     }
   },
   beforeMount() {
@@ -41,7 +52,15 @@ export default {
       })
     })
   },
-  methods: {}
+  methods: {
+    searchReportData() {
+      getReportTableData(this.report.uid, this.queryColumn).then(res => {
+        const { data, metadata } = res.data
+        this.tableColumn = metadata
+        this.tableData = data
+      })
+    }
+  }
 }
 </script>
 

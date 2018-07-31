@@ -25,7 +25,22 @@ func AddMetadataController(router *gin.Engine) {
 		metadata.GET("/report/listAll", listAllReports)
 		metadata.GET("/report/getQueryColumn", getQueryColumn)
 		metadata.GET("/datasource", getReportDatasource)
+		metadata.POST("/report/table/getData.json", getReportTableData)
 	}
+}
+
+func getReportTableData(c *gin.Context) {
+	var params []ReportQueryParameter
+	uid := c.DefaultQuery("uid", "-1")
+	if err := c.BindJSON(&params); err != nil {
+		// fmt.Println(params)
+		panic("parse query params error!")
+	}
+
+	// if data, err := json.Marshal(GetReportTableData(uid, params)); err == nil {
+	c.JSON(200, GetReportTableData(uid, params))
+	// }
+
 }
 
 func getQueryColumn(c *gin.Context) {

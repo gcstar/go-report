@@ -48,7 +48,7 @@ func init() {
 		panic(err)
 	}
 	db.DB().SetMaxIdleConns(0)
-	db.DB().SetConnMaxLifetime(time.Minute * 5)
+	db.DB().SetConnMaxLifetime(time.Minute * 30)
 	db.DB().SetMaxOpenConns(50)
 	db.LogMode(true)
 	DB = db

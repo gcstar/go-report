@@ -35,3 +35,11 @@ export function getQueryColumn(uid) {
     method: 'get'
   })
 }
+
+export function getReportTableData(uid, params) {
+  return request({
+    url: '/metadata/report/table/getData.json?uid=' + uid,
+    method: 'post',
+    data: params
+  })
+}

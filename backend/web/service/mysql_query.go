@@ -55,8 +55,7 @@ func (mysqlQueryer *MysqlQueryer) ParseMetaDataColumns(sqlText string) *[]Report
 	for i, columnType := range columnTypes {
 		metaColumn := columnList[i]
 		metaColumn.DataType = columnType.Name()
-		length, hasLength := columnType.Length()
-		if hasLength {
+		if length, ok := columnType.Length(); ok {
 			metaColumn.Width = length
 		} else {
 			metaColumn.Width = 0

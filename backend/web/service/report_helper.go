@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"regexp"
 	"report/goreport/backend/utils"
-	"strings"
 )
 
 type SearchParam struct {
@@ -26,28 +25,29 @@ func GetFromParameters(params map[string]string, dateRange int) *ReportParameter
 	if ok {
 		fmt.Println(c)
 	}
-
 	return nil
 }
 
 func GetQueryColumn(uid string) []ReportQueryParameter {
 	report := GetReportByUid(uid)
 	sqlText := report.SqlText
+	fmt.Println(sqlText)
 	params := utils.FindAll(sqlText, `\$\{.*?\}`)
 	size := len(params)
 	var queryParams map[string]string = make(map[string]string, size)
 	for _, param := range params {
-		key := strings.ToLower(utils.ReplaceAll(string(param), `[\\$\\{\\}]`, ""))
+		key := utils.ReplaceAll(string(param), `[\\$\\{\\}]`, "")
 		queryParams[key] = ""
 	}
 	var reprtQueryParameter []ReportQueryParameter
-	if _, ok := queryParams["starttime"]; ok {
+	if _, ok := queryParams["startTime"]; ok {
+		// add default value
 		// options := parseOptions(report.Options)
 		// setBuildInParams(queryParams, options.DataRange)
 		reprtQueryParameter =
-			append(reprtQueryParameter, ReportQueryParameter{FormElement: "date", Name: "starttime", Text: "开始时间", DataType: "date"})
+			append(reprtQueryParameter, ReportQueryParameter{FormElement: "date", Name: "startTime", Text: "开始时间", DataType: "date"})
 		reprtQueryParameter =
-			append(reprtQueryParameter, ReportQueryParameter{FormElement: "date", Name: "endtime", Text: "结束时间", DataType: "date"})
+			append(reprtQueryParameter, ReportQueryParameter{FormElement: "date", Name: "endTime", Text: "结束时间", DataType: "date"})
 	}
 
 	customQueryParams := parseQueryParams(report.QueryParams)
@@ -57,7 +57,6 @@ func GetQueryColumn(uid string) []ReportQueryParameter {
 			reprtQueryParameter = append(reprtQueryParameter, p)
 		}
 	}
-	// fmt.Println(reprtQueryParameter)
 	return reprtQueryParameter
 }
 
@@ -77,7 +76,7 @@ func setBuildInParams(params map[string]string, dateRange int) map[string]string
 	} else {
 		dateRange = dateRange - 1
 	}
-	params["starttime"] = utils.AddDaysFromNow(dateRange)
-	params["endtime"] = utils.GetNow()
+	params["startTime"] = utils.AddDaysFromNow(dateRange)
+	params["endTime"] = utils.GetNow()
 	return params
 }

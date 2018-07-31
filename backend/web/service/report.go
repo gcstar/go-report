@@ -3,6 +3,8 @@ package service
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
+	"report/goreport/backend/utils"
 
 	. "report/goreport/backend/db"
 	"time"
@@ -177,12 +179,65 @@ func GetReportQueryColumn(uid string) {
 
 }
 
-func GetReportData(uid string) {
-	report := GetReportByUid(uid)
-	queryParmas := parseQueryParams(report.QueryParams)
-	if len(queryParmas) == 0 {
+func GetReportTableData(uid string, params []ReportQueryParameter) map[string]interface{} {
 
+	var res map[string]interface{} = make(map[string]interface{}, 2)
+
+	report := GetReportByUid(uid)
+	sqlText := report.SqlText
+	var querySql string = sqlText
+
+	metaColumns := parseMetaColumns(report.MetaColumns)
+
+	// if data, err := json.Marshal(metaColumns); err != nil {
+	res["metadata"] = metaColumns
+	// }
+
+	for _, param := range params {
+		var regexpStr = "\\$\\{" + param.Name + "\\}"
+		querySql = utils.ReplaceAll(querySql, regexpStr, param.DefaultValue)
 	}
+
+	rows, err := DB.Raw(querySql).Rows()
+	if err != nil {
+		panic("query sql error")
+	}
+
+	var results []map[string]interface{}
+	cols, err := rows.Columns()
+
+	for rows.Next() {
+		var row = make([]interface{}, len(cols))
+		var rowp = make([]interface{}, len(cols))
+
+		for i := 0; i < len(cols); i++ {
+			rowp[i] = &row[i]
+		}
+		rows.Scan(rowp...)
+		rowMap := make(map[string]interface{})
+		for i, col := range cols {
+			t := reflect.TypeOf(row[i])
+			if t != nil {
+				tst := reflect.TypeOf(row[i]).String()
+				if tst == "[]uint8" {
+					ba := []byte{}
+					for _, b := range row[i].([]uint8) {
+						ba = append(ba, byte(b))
+					}
+					rowMap[col] = string(ba)
+				} else {
+					rowMap[col] = row[i]
+				}
+			} else {
+				rowMap[col] = ""
+			}
+
+		}
+
+		results = append(results, rowMap)
+	}
+	res["data"] = results
+	return res
 
 }
 
@@ -198,10 +253,10 @@ func parseQueryParams(jsonStr string) []ReportQueryParameter {
 	return queryParameter
 }
 
-func parseMetaColumns(jsonStr string) *ReportMetaDataColumn {
-	var metaDataColumn ReportMetaDataColumn
+func parseMetaColumns(jsonStr string) []ReportMetaDataColumn {
+	var metaDataColumn []ReportMetaDataColumn
 	json.Unmarshal([]byte(jsonStr), &metaDataColumn)
-	return &metaDataColumn
+	return metaDataColumn
 }
 
 func GetMetaDataColumns(dsId int, sqlText string) {
