@@ -2,7 +2,7 @@
   <div>
     <el-row style="margin:30px">
       <el-col :span="7">
-        <el-select filterable v-model="category" placeholder="报表目录" @change="handleCategoryChange">
+        <el-select clearable filterable v-model="category" placeholder="报表目录" @change="handleCategoryChange">
           <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id">
           </el-option>
         </el-select>
@@ -40,12 +40,7 @@
 </template>
 
 <script>
-import {
-  listAllReports,
-  listAllCategory,
-  listReportsByCategory,
-  findReports
-} from '@/api/report'
+import * as report from '@/api/report'
 
 export default {
   name: 'reportCategory',
@@ -56,7 +51,7 @@ export default {
         page: 1,
         size: 10
       },
-      fieldName: '',
+      fieldName: 'name',
       keyWord: '',
       category: '',
       reportList: [],
@@ -87,7 +82,7 @@ export default {
         this.fetchReportList()
       } else {
         const param = { fieldName: this.fieldName, keyWord: this.keyWord }
-        findReports(param).then(res => {
+        report.findReports(param).then(res => {
           this.reportList = res.data.data
           this.keyWord = ''
           this.fieldName = ''
@@ -95,7 +90,7 @@ export default {
       }
     },
     handleCategoryChange() {
-      listReportsByCategory(this.category).then(res => {
+      report.listReportsByCategory(this.category).then(res => {
         this.reportList = res.data.data
       })
     },
@@ -110,12 +105,12 @@ export default {
     },
     removeReport(id) {},
     fetchReportList() {
-      listAllReports().then(res => {
+      report.listAllReports().then(res => {
         this.reportList = res.data.data
       })
     },
     fetchCategoryList() {
-      listAllCategory().then(res => {
+      report.listAllCategory().then(res => {
         this.categoryList = res.data.data
       })
     }
@@ -136,8 +131,8 @@ export default {
   background-color: #fff;
 }
 .pagination {
-  margin: 0 auto;
-  width: 300px;
+  text-align: center;
+  margin-top: 30px;
 }
 </style>
 

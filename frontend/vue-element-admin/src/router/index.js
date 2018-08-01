@@ -67,11 +67,16 @@ export const constantRouterMap = [
     path: '/report',
     component: Layout,
     redirect: '/report/index',
+    alwaysShow: true,
+    meta: {
+      title: 'report',
+      icon: 'table'
+    },
     children: [{
       path: 'index',
       component: () => import('@/views/report/index'),
       name: 'report',
-      meta: { title: 'report', icon: 'table', noCache: true }
+      meta: { title: 'reportlist', icon: 'list', noCache: true }
     }, {
       path: 'preview/:id',
       hidden: true,

@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"regexp"
 	"report/goreport/backend/utils"
+	"strconv"
 )
 
 type SearchParam struct {
@@ -41,13 +42,13 @@ func GetQueryColumn(uid string) []ReportQueryParameter {
 	}
 	var reprtQueryParameter []ReportQueryParameter
 	if _, ok := queryParams["startTime"]; ok {
-		// add default value
-		// options := parseOptions(report.Options)
-		// setBuildInParams(queryParams, options.DataRange)
+		options := parseOptions(report.Options)
+		dategap, _ := strconv.Atoi(options.DataRange)
+		buildinParams := setBuildInParams(queryParams, dategap)
 		reprtQueryParameter =
-			append(reprtQueryParameter, ReportQueryParameter{FormElement: "date", Name: "startTime", Text: "开始时间", DataType: "date"})
+			append(reprtQueryParameter, ReportQueryParameter{DefaultValue: buildinParams["startTime"], FormElement: "date", Name: "startTime", Text: "开始时间", DataType: "date"})
 		reprtQueryParameter =
-			append(reprtQueryParameter, ReportQueryParameter{FormElement: "date", Name: "endTime", Text: "结束时间", DataType: "date"})
+			append(reprtQueryParameter, ReportQueryParameter{DefaultValue: buildinParams["endTime"], FormElement: "date", Name: "endTime", Text: "结束时间", DataType: "date"})
 	}
 
 	customQueryParams := parseQueryParams(report.QueryParams)
@@ -76,7 +77,7 @@ func setBuildInParams(params map[string]string, dateRange int) map[string]string
 	} else {
 		dateRange = dateRange - 1
 	}
-	params["startTime"] = utils.AddDaysFromNow(dateRange)
+	params["startTime"] = utils.AddDaysFromNow(-dateRange)
 	params["endTime"] = utils.GetNow()
 	return params
 }

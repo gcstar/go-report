@@ -51,9 +51,9 @@ type Report struct {
 
 // 报表选项
 type ReportOptions struct {
-	DataRange        int `json:"dataRange"`
-	Layout           int `json:"layout"`
-	StatColumnLayout int `json:"statColumnLayout"`
+	DataRange        string `json:"dataRange"`
+	Layout           string `json:"layout"`
+	StatColumnLayout string `json:"statColumnLayout"`
 }
 
 //报表元数据列类
@@ -189,10 +189,6 @@ func GetReportTableData(uid string, params []ReportQueryParameter) map[string]in
 
 	metaColumns := parseMetaColumns(report.MetaColumns)
 
-	// if data, err := json.Marshal(metaColumns); err != nil {
-	res["metadata"] = metaColumns
-	// }
-
 	for _, param := range params {
 		var regexpStr = "\\$\\{" + param.Name + "\\}"
 		querySql = utils.ReplaceAll(querySql, regexpStr, param.DefaultValue)
@@ -237,14 +233,17 @@ func GetReportTableData(uid string, params []ReportQueryParameter) map[string]in
 		results = append(results, rowMap)
 	}
 	res["data"] = results
+	res["metadata"] = metaColumns
 	return res
 
 }
 
-func parseOptions(jsonStr string) *ReportOptions {
+func parseOptions(jsonStr string) ReportOptions {
+	fmt.Println("parse options")
 	var reportOption ReportOptions
 	json.Unmarshal([]byte(jsonStr), &reportOption)
-	return &reportOption
+	fmt.Println(reportOption)
+	return reportOption
 }
 
 func parseQueryParams(jsonStr string) []ReportQueryParameter {

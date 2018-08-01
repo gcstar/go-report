@@ -63,7 +63,8 @@ export default {
     clipboardDemo: 'Clipboard',
     i18n: '国际化',
     preview: '报表预览',
-    reportedit: '报表编辑'
+    reportedit: '报表编辑',
+    reportlist: '报表列表'
   },
   navbar: {
     logOut: '退出登录',
