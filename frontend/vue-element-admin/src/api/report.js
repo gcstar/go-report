@@ -43,3 +43,10 @@ export function getReportTableData(uid, params) {
     data: params
   })
 }
+
+export function getAllDatasource() {
+  return request({
+    url: '/metadata/datasource/list',
+    method: 'get'
+  })
+}

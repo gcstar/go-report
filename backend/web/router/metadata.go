@@ -25,8 +25,40 @@ func AddMetadataController(router *gin.Engine) {
 		metadata.GET("/report/listAll", listAllReports)
 		metadata.GET("/report/getQueryColumn", getQueryColumn)
 		metadata.GET("/datasource", getReportDatasource)
+		metadata.GET("/datasource/list", getAllDatasource)
 		metadata.POST("/report/table/getData.json", getReportTableData)
+		metadata.GET("/dataset", getDatasetById)
+		metadata.GET("/datasetprovider", getDataProvider)
+
 	}
+}
+
+func getDataProvider(c *gin.Context) {
+	datasetId := c.DefaultQuery("datasetId", "0")
+	id, err := strconv.Atoi(datasetId)
+	if err != nil {
+		panic("parse datasetId error")
+	}
+	provider := GetDataProvider(0, nil, id)
+
+	c.JSON(200, OK("1", provider))
+}
+
+func getAllDatasource(c *gin.Context) {
+	datasources := GetAllDatasource()
+	if datasources == nil {
+		c.JSON(200, NoData())
+	}
+	c.JSON(200, OK("get datasources success!", datasources))
+}
+
+func getDatasetById(c *gin.Context) {
+	id, err := strconv.Atoi(c.DefaultQuery("id", "-1"))
+	if err != nil {
+		panic("id is not a number")
+	}
+	c.JSON(200, GetDatasetById(id))
+
 }
 
 func getReportTableData(c *gin.Context) {

@@ -41,28 +41,28 @@ export const constantRouterMap = [
       meta: { title: 'dashboard', icon: 'dashboard', noCache: true }
     }]
   },
-  {
-    path: '/documentation',
-    component: Layout,
-    redirect: '/documentation/index',
-    children: [{
-      path: 'index',
-      component: () => import('@/views/documentation/index'),
-      name: 'documentation',
-      meta: { title: 'documentation', icon: 'documentation', noCache: true }
-    }]
-  },
-  {
-    path: '/guide',
-    component: Layout,
-    redirect: '/guide/index',
-    children: [{
-      path: 'index',
-      component: () => import('@/views/guide/index'),
-      name: 'guide',
-      meta: { title: 'guide', icon: 'guide', noCache: true }
-    }]
-  },
+  // {
+  //   path: '/documentation',
+  //   component: Layout,
+  //   redirect: '/documentation/index',
+  //   children: [{
+  //     path: 'index',
+  //     component: () => import('@/views/documentation/index'),
+  //     name: 'documentation',
+  //     meta: { title: 'documentation', icon: 'documentation', noCache: true }
+  //   }]
+  // },
+  // {
+  //   path: '/guide',
+  //   component: Layout,
+  //   redirect: '/guide/index',
+  //   children: [{
+  //     path: 'index',
+  //     component: () => import('@/views/guide/index'),
+  //     name: 'guide',
+  //     meta: { title: 'guide', icon: 'guide', noCache: true }
+  //   }]
+  // },
   {
     path: '/report',
     component: Layout,
@@ -76,7 +76,7 @@ export const constantRouterMap = [
       path: 'index',
       component: () => import('@/views/report/index'),
       name: 'report',
-      meta: { title: 'reportlist', icon: 'list', noCache: true }
+      meta: { title: 'reportlist', icon: 'list', noCache: false }
     }, {
       path: 'preview/:id',
       hidden: true,
@@ -84,11 +84,75 @@ export const constantRouterMap = [
       name: 'preview',
       meta: { title: 'preview', icon: 'table', noCache: true }
     }, {
-      path: 'edit/:id',
+      path: 'reportedit/:id',
       hidden: true,
       component: () => import('@/views/report/edit'),
       name: 'reportedit',
-      meta: { title: 'reportedit', icon: 'table', noCache: true }
+      meta: { title: 'reportedit', icon: 'list', noCache: true }
+    }]
+  },
+  {
+    path: '/analysis',
+    component: Layout,
+    redirect: '/analysis/index',
+    alwaysShow: true,
+    meta: {
+      title: 'analysis',
+      icon: 'analysis'
+    },
+    children: [{
+      path: 'index',
+      component: () => import('@/views/analysis/index'),
+      name: 'dashboardList',
+      meta: { title: 'dashboardList', icon: 'list', noCache: true }
+    }]
+  },
+  {
+    path: '/datasource',
+    component: Layout,
+    redirect: '/datasource/index',
+    alwaysShow: true,
+    meta: {
+      title: 'datasource',
+      icon: 'datasource'
+    },
+    children: [{
+      path: 'index',
+      component: () => import('@/views/datasource/index'),
+      name: 'datasourceList',
+      meta: { title: 'datasourceList', icon: 'list', noCache: true }
+    }]
+  },
+  {
+    path: '/dataset',
+    component: Layout,
+    redirect: '/dataset/index',
+    alwaysShow: true,
+    meta: {
+      title: 'dataset',
+      icon: 'chart'
+    },
+    children: [{
+      path: 'index',
+      component: () => import('@/views/dataset/index'),
+      name: 'datasetList',
+      meta: { title: 'datasetList', icon: 'list', noCache: true }
+    }]
+  },
+  {
+    path: '/widget',
+    component: Layout,
+    redirect: '/widget/index',
+    alwaysShow: true,
+    meta: {
+      title: 'widget',
+      icon: 'widget'
+    },
+    children: [{
+      path: 'index',
+      component: () => import('@/views/widget/index'),
+      name: 'widgetList',
+      meta: { title: 'widgetList', icon: 'list', noCache: true }
     }]
   }
 ]
@@ -99,9 +163,9 @@ export default new Router({
   routes: constantRouterMap
 })
 
-export const asyncRouterMap1 = []
+export const asyncRouterMap = []
 
-export const asyncRouterMap = [
+export const asyncRouterMap1 = [
   {
     path: '/permission',
     component: Layout,

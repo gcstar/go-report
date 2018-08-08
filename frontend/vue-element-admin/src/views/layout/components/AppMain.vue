@@ -28,6 +28,8 @@ export default {
   min-height: calc(100vh - 84px);
   position: relative;
   overflow: hidden;
+  background-color: #ecf0f5;
+
 }
 </style>
 

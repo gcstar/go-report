@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "vue-crosstab": "^0.8.0"
+  }
+}

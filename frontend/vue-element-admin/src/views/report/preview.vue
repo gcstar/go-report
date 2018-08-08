@@ -19,7 +19,7 @@
       </el-row>
     </el-card>
     <el-card>
-      <el-table :data="tableData.slice((pagination.page-1)*pagination.size,pagination.page*pagination.size)" border stripe>
+      <el-table :data="reportData" border stripe>
         <el-table-column v-for="item in tableColumn" :key="item.name" :prop="item.name" :label="item.text"></el-table-column>
       </el-table>
       <div class="pagination">
@@ -50,6 +50,16 @@ export default {
       downloadLoading: false
     }
   },
+  computed: {
+    reportData: function() {
+      if (this.tableData.length === 0) {
+        return []
+      } else {
+        return this.tableData.slice((this.pagination.page - 1) * this.pagination.size,
+          this.pagination.page * this.pagination.size)
+      }
+    }
+  },
   beforeMount() {
     this.uid = this.$route.params.id
     const param = { fieldName: 'uid', keyWord: this.uid }
@@ -70,6 +80,9 @@ export default {
   },
   methods: {
     handleDownload() {
+      if (this.tableData.length === 0) {
+        // $.message()
+      }
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
         const tHeader = []
@@ -108,7 +121,9 @@ export default {
       report.getReportTableData(this.report.uid, this.queryColumn).then(res => {
         const { data, metadata } = res.data
         this.tableColumn = metadata
-        this.tableData = data
+        if (data !== null) {
+          this.tableData = data
+        }
       })
     }
   }

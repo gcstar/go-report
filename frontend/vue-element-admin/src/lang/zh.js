@@ -64,7 +64,15 @@ export default {
     i18n: '国际化',
     preview: '报表预览',
     reportedit: '报表编辑',
-    reportlist: '报表列表'
+    reportlist: '报表列表',
+    analysis: '多维分析',
+    dashboardList: '看板列表',
+    datasource: '数据源管理',
+    datasourceList: '数据源列表',
+    widget: '图表管理',
+    widgetList: '图表列表',
+    dataset: '数据集管理',
+    datasetList: '数据集列表'
   },
   navbar: {
     logOut: '退出登录',

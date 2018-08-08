@@ -45,8 +45,8 @@ type Report struct {
 	CreateUser   string    `json:"createUser"`
 	GmtCreated   time.Time `json:"gmtCreated"`
 	GmtModified  time.Time `json:"gmtModified"`
-	CategoryName string    `gorm:"-" json:"categoryName"`
-	DsName       string    `gorm:"-" json:"dsName"`
+	CategoryName string    `json:"categoryName"`
+	DsName       string    `json:"dsName"`
 }
 
 // 报表选项
@@ -96,8 +96,8 @@ type ReportQueryParameter struct {
 
 type ReportParameter struct {
 	ID                 string `json:"id"`
-	Name               string
-	Layout             int
+	Name               string `json:"name"`
+	Layout             int    `json:"layout"`
 	StatColumnLayout   int    `json:"statColumnLayout"`
 	SqlText            string `json:"sqlText"`
 	MetaColumns        *[]ReportMetaDataColumn
@@ -179,6 +179,7 @@ func GetReportQueryColumn(uid string) {
 
 }
 
+//TODO UGLY
 func GetReportTableData(uid string, params []ReportQueryParameter) map[string]interface{} {
 
 	var res map[string]interface{} = make(map[string]interface{}, 2)
@@ -205,7 +206,6 @@ func GetReportTableData(uid string, params []ReportQueryParameter) map[string]in
 	for rows.Next() {
 		var row = make([]interface{}, len(cols))
 		var rowp = make([]interface{}, len(cols))
-
 		for i := 0; i < len(cols); i++ {
 			rowp[i] = &row[i]
 		}
@@ -235,14 +235,15 @@ func GetReportTableData(uid string, params []ReportQueryParameter) map[string]in
 	res["data"] = results
 	res["metadata"] = metaColumns
 	return res
+}
+
+func getSqlText(sqlText string, dataRange int, queryParams string) {
 
 }
 
 func parseOptions(jsonStr string) ReportOptions {
-	fmt.Println("parse options")
 	var reportOption ReportOptions
 	json.Unmarshal([]byte(jsonStr), &reportOption)
-	fmt.Println(reportOption)
 	return reportOption
 }
 
