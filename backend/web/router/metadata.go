@@ -29,8 +29,16 @@ func AddMetadataController(router *gin.Engine) {
 		metadata.POST("/report/table/getData.json", getReportTableData)
 		metadata.GET("/dataset", getDatasetById)
 		metadata.GET("/datasetprovider", getDataProvider)
+		metadata.POST("/test/queryAggSql", testQueryAggData)
 
 	}
+}
+
+func testQueryAggData(c *gin.Context) {
+	cfg := c.PostForm("cfg")
+	sql := c.PostForm("sql")
+	s := TestQueryAggData(cfg, sql)
+	c.JSON(200, OK("", s))
 }
 
 func getDataProvider(c *gin.Context) {
@@ -39,9 +47,9 @@ func getDataProvider(c *gin.Context) {
 	if err != nil {
 		panic("parse datasetId error")
 	}
-	provider := GetDataProvider(0, nil, id)
+	GetDataProvider(0, nil, id)
 
-	c.JSON(200, OK("1", provider))
+	c.JSON(200, NoData())
 }
 
 func getAllDatasource(c *gin.Context) {

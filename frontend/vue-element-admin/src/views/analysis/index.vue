@@ -1,13 +1,14 @@
 <template>
   <div>
     <el-row>
-      <Chart span="12" chartType="line" :chartData="chartData" title="折线图"></Chart>
-      <Chart span="12" chartType="pie" :chartData="chartData" title="饼图"></Chart>
+      <Chart :span="12" chartType="line" :chartData="chartData" title="折线图"></Chart>
+      <Chart :span="12" chartType="pie" :chartData="chartData" title="饼图"></Chart>
     </el-row>
     <el-row>
-      <Chart span="12" chartType="column" :chartData="chartData" title="柱状图"></Chart>
-      <Chart span="12" chartType="bar" :chartData="chartData" title="bar图"></Chart>
+      <Chart :span="12" chartType="column" :chartData="chartData" title="柱状图"></Chart>
+      <Chart :span="12" chartType="bar" :chartData="chartData" title="bar图"></Chart>
     </el-row>
+
   </div>
 
 </template>

@@ -39,8 +39,8 @@ export default {
       default: ''
     },
     span: {
-      type: String,
-      default: '12'
+      type: Number,
+      default: 12
     }
   },
   data() {

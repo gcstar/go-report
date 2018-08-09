@@ -2,7 +2,6 @@ package service
 
 import (
 	"encoding/json"
-	"fmt"
 	. "report/goreport/backend/db"
 	"time"
 )
@@ -26,13 +25,6 @@ func GetDatasetById(id int) Dataset {
 	var dataset Dataset
 	DB.Where("id=?", id).Find(&dataset)
 	json.Unmarshal([]byte(dataset.DataJson), &data_json)
-
-	if query, ok := data_json["query"]; ok {
-		if sql, ok := query.(map[string]interface{})["sql"]; ok {
-			fmt.Println(sql)
-		}
-	}
-
 	return dataset
 }
 
