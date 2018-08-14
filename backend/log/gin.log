@@ -1,1 +1,5 @@
-[GIN] 2018/08/09 - 17:36:09 | 200 |      344.65µs |             ::1 | POST     /metadata/test/queryAggSql
+[GIN] 2018/08/14 - 10:00:45 | 200 |   46.681129ms |             ::1 | GET      /metadata/categorytree
+[GIN] 2018/08/14 - 10:00:48 | 200 |    16.78763ms |             ::1 | GET      /metadata/widget/findWidget?fieldName=widget_name&keyWord=pc%E5%92%8Ch5%E5%8D%A0%E6%AF%94
+[GIN] 2018/08/14 - 10:00:50 | 200 |    9.840868ms |             ::1 | GET      /metadata/widget/findWidget?fieldName=widget_name&keyWord=%E5%A4%96%E9%83%A8%E6%B5%81%E9%87%8F%E6%83%85%E5%86%B5
+[GIN] 2018/08/14 - 10:00:51 | 200 |   21.685736ms |             ::1 | GET      /metadata/widget/findWidget?fieldName=widget_name&keyWord=pict3
+[GIN] 2018/08/14 - 10:00:52 | 200 |    9.091983ms |             ::1 | GET      /metadata/widget/findWidget?fieldName=widget_name&keyWord=pv%E5%92%8Cuv%E6%95%B4%E4%BD%93%E6%8A%98%E7%BA%BF%E5%9B%BE

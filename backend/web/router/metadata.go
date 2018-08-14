@@ -30,7 +30,20 @@ func AddMetadataController(router *gin.Engine) {
 		metadata.GET("/dataset", getDatasetById)
 		metadata.GET("/datasetprovider", getDataProvider)
 		metadata.POST("/test/queryAggSql", testQueryAggData)
+		metadata.GET("/categorytree", getCategoryName)
+		metadata.GET("/widget/findWidget", findWidget)
 
+	}
+}
+
+func findWidget(c *gin.Context) {
+	fieldName := c.DefaultQuery("fieldName", "widget_name")
+	keyWord := c.DefaultQuery("keyWord", "report")
+	widget := FindWidget(fieldName, keyWord)
+	if widget == nil {
+		c.JSON(200, NoData())
+	} else {
+		c.JSON(200, OK("find widget success", widget))
 	}
 }
 
@@ -41,6 +54,11 @@ func testQueryAggData(c *gin.Context) {
 	c.JSON(200, OK("", s))
 }
 
+func getCategoryName(c *gin.Context) {
+	d := GetCategoryWidgets()
+	c.JSON(200, OK("", d))
+}
+
 func getDataProvider(c *gin.Context) {
 	datasetId := c.DefaultQuery("datasetId", "0")
 	id, err := strconv.Atoi(datasetId)
@@ -48,7 +66,6 @@ func getDataProvider(c *gin.Context) {
 		panic("parse datasetId error")
 	}
 	GetDataProvider(0, nil, id)
-
 	c.JSON(200, NoData())
 }
 

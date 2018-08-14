@@ -87,6 +87,7 @@ func queryAggData(config AggConfig) {
 
 }
 
+//TODO 自定义参数解析
 func getQueryAggDataSql(config AggConfig, sql string) string {
 	columns := config.Columns
 	rows := config.Rows

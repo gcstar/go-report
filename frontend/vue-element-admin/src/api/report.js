@@ -50,3 +50,16 @@ export function getAllDatasource() {
     method: 'get'
   })
 }
+
+export function getCategoryTree() {
+  return request({
+    url: '/metadata/categorytree',
+    method: 'get'
+  })
+}
+export function findWidget(params) {
+  return request({
+    url: '/metadata/widget/findWidget?' + Qs.stringify(params),
+    method: 'get'
+  })
+}
