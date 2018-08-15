@@ -63,3 +63,18 @@ export function findWidget(params) {
     method: 'get'
   })
 }
+
+export function getDataset(id) {
+  return request({
+    url: '/metadata/dataset?id=' + id,
+    method: 'get'
+  })
+}
+
+export function getAggSql(params) {
+  return request({
+    url: '/metadata/dataprovider/queryAggSql',
+    method: 'post',
+    data: params
+  })
+}

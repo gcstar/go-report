@@ -16,7 +16,7 @@ type Aggregatable interface {
 }
 
 type ValueConfig struct {
-	ColumnName string `json:"column"`
+	ColumnName string `json:"columnName"`
 	AggType    string `json:"aggType"`
 }
 
@@ -49,7 +49,7 @@ type SimpleDataSet struct {
 	Interval     int    `json:"interval"`
 }
 
-func TestQueryAggData(configStr string, sql string) string {
+func QueryAggSql(configStr string, sql string) string {
 	config := GetAggConfig(configStr)
 	return getQueryAggDataSql(config, sql)
 }
@@ -120,7 +120,7 @@ func getQueryAggDataSql(config AggConfig, sql string) string {
 		case "max":
 			aggArray = append(aggArray, "MAX("+aggExp+")")
 		case "min":
-			aggArray = append(aggArray, "min("+aggExp+")")
+			aggArray = append(aggArray, "MIN("+aggExp+")")
 		case "distinct":
 			aggArray = append(aggArray, "SUM("+aggExp+")")
 		case "avg":
@@ -138,7 +138,7 @@ func getQueryAggDataSql(config AggConfig, sql string) string {
 			case "=", "eq":
 				strs := strings.Join(where.Values, "','")
 				str = where.ColumnName + " IN ('" + strs + "')"
-			case "!=", "ne":
+			case "!=", "ne", "≠":
 				strs := strings.Join(where.Values, "','")
 				str = where.ColumnName + " NOT IN ('" + strs + "')"
 			case ">":

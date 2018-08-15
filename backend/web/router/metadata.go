@@ -10,6 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type AggQuery struct {
+	Cfg string `json:"cfg"`
+	Sql string `json:"sql"`
+}
+
 func AddMetadataController(router *gin.Engine) {
 	metadata := router.Group("/metadata")
 	{
@@ -29,7 +34,7 @@ func AddMetadataController(router *gin.Engine) {
 		metadata.POST("/report/table/getData.json", getReportTableData)
 		metadata.GET("/dataset", getDatasetById)
 		metadata.GET("/datasetprovider", getDataProvider)
-		metadata.POST("/test/queryAggSql", testQueryAggData)
+		metadata.POST("/dataprovider/queryAggSql", queryAggSql)
 		metadata.GET("/categorytree", getCategoryName)
 		metadata.GET("/widget/findWidget", findWidget)
 
@@ -47,10 +52,12 @@ func findWidget(c *gin.Context) {
 	}
 }
 
-func testQueryAggData(c *gin.Context) {
-	cfg := c.PostForm("cfg")
-	sql := c.PostForm("sql")
-	s := TestQueryAggData(cfg, sql)
+func queryAggSql(c *gin.Context) {
+	var param AggQuery
+	if err := c.BindJSON(&param); err != nil {
+		panic("parse query params error!")
+	}
+	s := QueryAggSql(param.Cfg, param.Sql)
 	c.JSON(200, OK("", s))
 }
 
@@ -82,7 +89,7 @@ func getDatasetById(c *gin.Context) {
 	if err != nil {
 		panic("id is not a number")
 	}
-	c.JSON(200, GetDatasetById(id))
+	c.JSON(200, OK("", GetDatasetById(id)))
 
 }
 

@@ -8,7 +8,7 @@ import (
 const SEPERATOR = "/"
 
 type Widget struct {
-	WidgetId     uint   `json:"widget_id" gorm:"primary_key"`
+	WidgetId     uint   `json:"widgetId" gorm:"primary_key"`
 	UserId       string `json:"userId"`
 	CategoryName string `json:"categoryName"`
 	WidgetName   string `json:"widgetName"`

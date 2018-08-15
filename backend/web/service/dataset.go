@@ -10,7 +10,7 @@ type Dataset struct {
 	ID           int        `json:"id"`
 	UserId       int        `json:"userId"`
 	CategoryName string     `json:"categoryName"`
-	DatasetName  string     `json:"datesetName"`
+	DatasetName  string     `json:"datasetName"`
 	DataJson     string     `json:"dataJson"`
 	GmtCreated   *time.Time `json:"gmt_created"`
 	GmtModified  *time.Time `json:"gmt_modified"`
